@@ -13,10 +13,10 @@
         />
 
         <q-toolbar-title>
-          <img src="img/logoComodisimos.png" style="width: 120px">
+          Gestion de inventario
         </q-toolbar-title>
 
-        <div>Gestion de inventario v1.0</div>
+        <div>v1.0</div>
       </q-toolbar>
     </q-header>
 
@@ -24,15 +24,21 @@
       v-model="leftDrawerOpen"
       show-if-above
       bordered
-      class="bg-grey-3"
+      style="background-color: #0d153c"
 
     >
       <q-list>
+        
+        <img src="img/logoComodisimosMenu.png" style="width: 45px; margin: 10px; margin-left: 25px;">
         <q-item-label
           header
-          class="text-grey-9 text-bold"
+          class="text-white absolute-center"
+          style="position: absolute; top: 0; margin-top: 20px;"
         >
+        
           Menu de acciones
+          <q-icon name="fas fa-sign-out-alt" class="absolute-left" style="margin-top: 40px; margin-left: 35px;"/>
+          <q-icon name="fas fa-info-circle" class="absolute-left" style="margin-top: 40px; margin-left: 15px;"/>
 
         </q-item-label >
 
@@ -59,23 +65,20 @@ const linksList = [
     title: 'Gestion de logs',
     caption: 'Asignar equipo, cambiar caracteristicas, etc.',
     icon: "far fa-save",
-    link: 'https://quasar.dev',
-    style: 'margin: 10px; padding: 10px; border-radius: 20px;'
+    style: "margin: 10px; border-radius: 20px; font-family: 'Heebo', sans-serif'; font-weight: 100;"
   },
 
   {
     title: 'Gestion de inventario',
     caption: 'Registrar equipos',
     icon: 'fas fa-laptop-house',
-    link: 'https://github.com/quasarframework',
-    style: 'margin: 10px; padding: 15px; border-radius: 20px; '
+    style: "margin: 10px; padding: 15px; border-radius: 20px; font-family: 'Heebo', sans-serif'; font-weight: 100;"
   },
   {
     title: 'Manual de usuario',
     caption: 'Manual con las instrucciones del software',
     icon: "fas fa-book-reader",
-    link: 'http://localhost:9090/#/registrar',
-    style: 'margin: 10px; border-radius: 20px; '
+    style: "margin: 10px; border-radius: 20px; font-family: 'Heebo', sans-serif'; font-weight: 100;"
   }
 ]
 

@@ -3,16 +3,16 @@
     clickable
     tag="a"
     target="_blank"
-    :href="link"
-    class="bg-grey-10"
   >
+    
     <q-item-section
       v-if="icon"
       avatar
       color="white"
+      
 
     >
-      <q-icon class="text-grey-6" :name="icon" />
+      <q-icon class="text-white" :name="icon" />
     </q-item-section>
 
     <q-item-section>
@@ -21,6 +21,7 @@
         {{ caption }}
       </q-item-label>
     </q-item-section>
+    
   </q-item>
 </template>
 

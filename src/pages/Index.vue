@@ -14,9 +14,11 @@
           :rows="logs[0]"
           :columns="columns"
           row-key="name"
-          dark
           color="amber"
-        />
+          
+        >
+        
+        </q-table>
   </div>
     </div>
   </q-page>
@@ -31,7 +33,10 @@ export default {
   data () {
     return {
       logs: [],
-      user: '',
+      inventory: [],
+      count: 0,
+      json: {},
+      size_inventory_response: '',
       columns: [
         {
           name: 'id',
@@ -43,10 +48,8 @@ export default {
         { name: 'type', align: 'center', label: 'Tipo', field: 'type', sortable: true },
         { name: 'user', align: 'center', label: 'Usuario responsable', field: 'user', sortable: true },
         { name: 'employee', align: 'center', label: 'Empleado asignado', field: 'employee', sortable: true},
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        { name: 'characteristics', align: 'center', label: 'Characteristics', field: row => this.comoQuiera(row), sortable: true },
-        { name: 'reason', align: 'center', label: 'Razon', field: 'reason', sortable: true },
-        { name: 'inventory_id', align: 'center', label: 'Equipo', field: 'inventory_id', sortable: true }
+        { name: 'reason', align: 'center', label: 'Razon', field: 'reason', sortable: true},
+        { name: 'inventory_id', align: 'center', label: 'Equipo', field: row => this.consultInventory(row), sortable: true }
       ]
     }
   },
@@ -79,10 +82,29 @@ export default {
           console.log(e)
         })
     },
-    comoQuiera (row) {
-      console.log('aaa', row)
-      
-      return 'c'
+    // comoQuiera (){
+    //Este metodo se puede llamar en algun campo de la tabla, como se muestra en columns 
+    // }
+        consultInventory (row){
+        this.$axios
+        .get('http://localhost/sistemaDeInventario/public/api/consultInventory', {
+            params: {
+              id: 1
+            }
+         })
+         .then(res => {
+          response = (this.inventory = res.data)
+          return response
+        })
+        .catch(e => {
+          console.log(e)
+        })
+      },
+    sendConsultInventory (){
+      this.count++
+      size_inventory_response= clothing.length;
+      this.count
+      json={"id":this.count}
     }
   }
 }
