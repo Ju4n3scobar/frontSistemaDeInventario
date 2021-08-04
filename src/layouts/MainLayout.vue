@@ -11,37 +11,29 @@
           aria-label="Menu"
           @click="toggleLeftDrawer"
         />
-
         <q-toolbar-title>
           Gestion de inventario
         </q-toolbar-title>
-
         <div>v1.0</div>
       </q-toolbar>
     </q-header>
-
     <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
       bordered
       style="background-color: #0d153c"
-
     >
       <q-list>
-        
         <img src="img/logoComodisimosMenu.png" style="width: 45px; margin: 10px; margin-left: 25px;">
         <q-item-label
           header
           class="text-white absolute-center"
-          style="position: absolute; top: 0; margin-top: 20px;"
+          style="position: absolute; top: 0; margin-top: 20px; margin-right: 60px;"
         >
-        
-          Menu de acciones
+          Juan Andrés
           <q-icon name="fas fa-sign-out-alt" class="absolute-left" style="margin-top: 40px; margin-left: 35px;"/>
           <q-icon name="fas fa-info-circle" class="absolute-left" style="margin-top: 40px; margin-left: 15px;"/>
-
         </q-item-label >
-
         <EssentialLink
           v-for="link in essentialLinks"
           :key="link.title"
@@ -49,13 +41,11 @@
         />
       </q-list>
     </q-drawer>
-
     <q-page-container>
       <router-view />
     </q-page-container>
   </q-layout>
 </template>
-
 <script lang="ts">
 import EssentialLink from 'components/EssentialLink.vue'
 

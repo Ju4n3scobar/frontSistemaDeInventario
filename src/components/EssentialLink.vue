@@ -4,27 +4,21 @@
     tag="a"
     target="_blank"
   >
-    
     <q-item-section
       v-if="icon"
       avatar
       color="white"
-      
-
     >
       <q-icon class="text-white" :name="icon" />
     </q-item-section>
-
     <q-item-section>
       <q-item-label class="text-white" >{{ title }}</q-item-label>
       <q-item-label class="text-grey-6" caption>
         {{ caption }}
       </q-item-label>
     </q-item-section>
-    
   </q-item>
 </template>
-
 <script lang="ts">
 import { defineComponent } from 'vue'
 

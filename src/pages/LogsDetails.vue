@@ -1,63 +1,36 @@
 <template>
   <q-page class="q-pa-xl">
-        <h4>Registrar equipo</h4>
-
+        <h4>Detalles logs</h4>
         <q-form class="row q-col-glutter-md" @submit.prevent="pressSave" @reset="pressReset" ref="form">
-
             <div class="col-12 col-sm-6">
-                 <q-input lazy-rules :rules="[
-                    val => !!val || 'Campo obligatorio',
-                    val => val.length > 4 || 'Por favor ingresa al menos cuatro caracteres',
-                    val => val.length < 20 || 'Solo se permiten veinte caracteres',
-                    ]" rounded outlined v-model="nombre" label="Nombre" /><br><br>
+                 <q-input rounded outlined v-model="user" label="Usuario" /><br><br>
             </div>
             <div class="col-12 col-sm-6">
-                 <q-input lazy-rules :rules="[
-                    val => !!val || 'Campo obligatorio',
-                    val => val.length > 10 || 'Por favor ingresa al menos cuatro caracteres',
-                    ]" rounded outlined v-model="asignacion" label="Usuario a asignar" /><br><br>
-            </div>
-            
-            <div class="col-12 col-sm-6">
-                <q-select lazy-rules :rules="[
-                    val => !!val || 'Campo obligatorio',
-                    ]" rounded outlined v-model="seleccionClasificacion" :options="clasificacion" label="Clasificacion" />
+                 <q-input rounded outlined v-model="type" label="Tipo" /><br><br>
             </div>
             <div class="col-12 col-sm-6">
-                 <q-input lazy-rules :rules="[
-                    val => !!val || 'Campo obligatorio',
-                    val => val.length >= 5 || 'Por favor ingresa al menos cinco digitos',
-                    val => val.length < 9 || 'Solo se permiten referencias de nueve digitos',
-                    ]" rounded outlined v-model="referencia" label="Referencia" /><br><br>
+                <q-input rounded outlined v-model="characteristics" label="Caracteristicas" />
             </div>
             <div class="col-12 col-sm-6">
-                <q-select lazy-rules :rules="[
-                    val => !!val || 'Campo obligatorio',
-                    ]" rounded outlined v-model="seleccionEstado" :options="estado" label="Estado" /><br><br>
-            </div>
-
-            <div class="col-12">
-                <q-btn color="primary" type="submit" label="Registrar" />
-                <q-btn color="primary" type="reset" outline class="q-ml-sm" label="Limpiar" />
+                 <q-input rounded outlined v-model="employee" label="Empleado asignado" /><br><br>
             </div>
         </q-form>
-    </q-page>
+  </q-page>
 </template>
 
 <script>
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-
 import { ref } from 'vue'
 import { Notify, useQuasar } from 'quasar'
-export default ({
+export default {
+  name: 'tutorial',
+  el: 'app',
     setup() {
         const nombre = ref(null)
         const asignacion = ref(null)
-        const clasificacion = ['Torre', 'Monitor', 'Router', 'Scanner']
+        const tipo = ['Registrar', 'Actualizar', 'Router', 'Scanner']
         const referencia = ref(null)
         const estado = ['Activo', 'Inactivo']
-        const seleccionClasificacion=ref(null)
+        const seleccionTipo=ref(null)
         const seleccionEstado=ref(null)
         const form = ref(null)
         const q = useQuasar()
@@ -76,15 +49,15 @@ export default ({
             nombre.value = null
             asignacion.value = null
             referencia.value = null
-            seleccionClasificacion.value = null
+            seleccionTipo.value = null
             seleccionEstado.value = null
         }
         return{
             nombre,
             asignacion,
-            clasificacion,
+            tipo,
             referencia,
-            seleccionClasificacion,
+            seleccionTipo,
             seleccionEstado,
             estado,
             form,
@@ -92,5 +65,53 @@ export default ({
             pressReset
         }
     },
-})
+    data () {
+    return {
+      logs: [],
+      inventory: [],
+      count: 0,
+      user: [],
+      characteristics: '',
+      type: [],
+      employee: [],
+      inventory_id: [],
+      json: {},
+      size_inventory_response: ''
+    }
+  },
+  created () {
+    // this.listOfUnassigment()
+    this.listOfUnassigment()
+  },
+  methods: {
+    listOfUnassigment () {
+      this.$axios
+        .get('http://localhost/sistemaDeInventario/public/api/showLogs')
+        .then((res) => {
+          this.logs = res.data
+          this.user = res.data[0][0]['user']
+          this.type = res.data[0][0]['type']
+          this.characteristics = JSON.stringify(res.data[1][0]).replace(/"/g,"").replace(/{/g,"").replace(/}/g,"").replace(/]/g,"").replace("[","").replace("[","")
+          this.characteristics.replace('[','')
+          this.employee = res.data[0][0]['employee']
+        })
+        .catch(e => {
+          console.log(e)
+        })
+    },
+    listOfCharacteristics () {
+      this.$axios
+        .get('http://localhost/sistemaDeInventario/public/api/returnCharacteristics')
+        .then((res) => {
+          this.logs = res.data
+          this.user = res.data[0][0]['user']
+          this.type = res.data[0][0]['type']
+          this.employee = res.data[0][0]['employee']
+        })
+        .catch(e => {
+          console.log(e)
+        })
+    }
+  }
+}
 </script>
