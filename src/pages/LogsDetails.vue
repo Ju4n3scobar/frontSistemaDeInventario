@@ -12,12 +12,16 @@
                 <q-input rounded outlined v-model="characteristics" label="Caracteristicas" />
             </div>
             <div class="col-12 col-sm-6">
-                 <q-input rounded outlined v-model="employee" label="Empleado asignado" /><br><br>
+                <q-input rounded outlined v-model="employee" label="Empleado asignado" /><br><br>        
+            </div>
+            <div > 
+              <q-btn style="margin-left: -200px; margin-top: 150px;" label="Guardar" type="submit" color="primary" class="q-ma-xl absolute-center"/>
+              <q-btn style="margin-left: 0px; margin-top: 150px;" outline label="Actualizar" type="reset" color="secondary" class="q-ma-xl absolute-center"/>
+              <q-btn style="margin-left: 200px; margin-top: 150px; background: #E64532; color: white" label="Dar de baja" type="submit" class="q-ma-xl absolute-center"/>
             </div>
         </q-form>
-  </q-page>
+    </q-page>
 </template>
-
 <script>
 import { ref } from 'vue'
 import { Notify, useQuasar } from 'quasar'

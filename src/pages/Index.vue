@@ -8,6 +8,7 @@
           </td>
         </tr>
       </table> -->
+      <pre>{{ inventory }}</pre>
       <div class="q-pa-md">
         <q-table
           title="Lista de inventario"
@@ -16,9 +17,8 @@
           :columns="columns"
           row-key="name"
           color="amber" 
-        >
-        </q-table>
-  </div>
+        />
+      </div>
     </div>
   </q-page>
 </template>
@@ -28,44 +28,46 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import { QBtn, QBtnGroup } from 'quasar'
 export default {
+  
   name: 'tutorial',
   el: 'app',
-  
   data () {
-    return {
-      logs: [],
-      logNoCharacteristics:[],
-      inventory: [],
-      inventory1: [],
-      count: 0,
-      id: [],
-      params: [],
-      json: {},
-      columns: [
-        {
-          name: 'id',
-          label: 'Id Log',
-          align: 'center',
-          field: 'id',
-          sortable: true
-        },
-        { name: 'type', align: 'center', label: 'Tipo', field: 'type', sortable: true },
-        { name: 'user', align: 'center', label: 'Usuario responsable', field: 'user', sortable: true },
-        { name: 'employee', align: 'center', label: 'Empleado asignado', field: 'employee', sortable: true},
-        { name: 'reason', align: 'center', label: 'Razon', field: 'reason', sortable: true},
-        { name: 'inventory_id', align: 'center', label: 'Equipo', field: row => this.inventory , sortable: true }
-      ]
-    }
-  },
-  created() {
+      return {
+        logs: [],
+        logNoCharacteristics:[],
+        inventory: [],
+        inventory1: [],
+        count: 0,
+        id: [],
+        params: [],
+        json: {},
+        columns: [
+          {
+            name: 'id',
+            label: 'Id Log',
+            align: 'center',
+            field: 'id',
+            sortable: true
+          },
+          { name: 'type', align: 'center', label: 'Tipo', field: 'type', sortable: true },
+          { name: 'user', align: 'center', label: 'Usuario responsable', field: 'user', sortable: true },
+          { name: 'employee', align: 'center', label: 'Empleado asignado', field: 'employee', sortable: true},
+          { name: 'reason', align: 'center', label: 'Razon', field: 'reason', sortable: true},
+          { name: 'inventory_id', align: 'center', label: 'Equipo', field: row => this.inventory , sortable: true },
+          { name: 'Acciones', align: 'center', label: 'Acciones', field: row => QBtn , sortable: true }
+        ]
+      }
+    },
+  beforeMount() {
     // this.listOfUnassigment()
     this.listOfUnassigment()
     this.consultInventory()
   },
   methods: {
     gotosite(){
-      window.location.href = 'http://localhost:8080/?#/logsDetails'
+      window.location.href = 'http://localhost:8080/?#/logsDetails?'
     },
     // async listOfUnassigment(): Promise<void> {
     //   console.log('hola que haces');
@@ -90,7 +92,7 @@ export default {
            this.logNoCharacteristics.forEach(element => {
             this.count = this.count+1
             this.id = element['inventory_id']
-            console.log(this.count)
+            console.log(this.id)
             // let params = JSON.stringify({
             //   id: this.logs[0][this.count]['inventory_id'],
             // })
@@ -106,6 +108,7 @@ export default {
               })
               .then(res => {
                 this.inventory = res.data[0]['name']
+                console.log(res.data[0]['name'])
                 })
               .catch(e => {
                 console.log(e)
@@ -119,6 +122,7 @@ export default {
     },
        consultInventory (row) {
     //   this.logNoCharacteristics = this.logs[0]
+    
       
     },
     // comoQuiera (){
@@ -131,5 +135,6 @@ export default {
       json={"id":this.count}
     }
   }
+  
  }
 </script>
