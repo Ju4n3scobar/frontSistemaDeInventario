@@ -28,7 +28,7 @@
         <q-item-label
           header
           class="text-white absolute-center"
-          style="position: absolute; top: 0; margin-top: 20px; margin-right: 60px;"
+          style="position: absolute; top: 0; margin-top: 20px; margin-left: -30px;"
         >
           Juan Andrés
           <q-icon name="fas fa-sign-out-alt" class="absolute-left" style="margin-top: 40px; margin-left: 35px;"/>

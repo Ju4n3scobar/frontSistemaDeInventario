@@ -10,7 +10,7 @@
       </table> -->
       <div class="q-pa-md">
         <q-table
-          title="Acciones"
+          title="Lista de inventario"
           :rows="logs[0]"
           @row-click= gotosite()
           :columns="columns"
@@ -35,11 +35,13 @@ export default {
   data () {
     return {
       logs: [],
+      logNoCharacteristics:[],
       inventory: [],
+      inventory1: [],
       count: 0,
+      id: [],
+      params: [],
       json: {},
-      i=0,
-      id = '',
       columns: [
         {
           name: 'id',
@@ -56,7 +58,7 @@ export default {
       ]
     }
   },
-  created () {
+  created() {
     // this.listOfUnassigment()
     this.listOfUnassigment()
     this.consultInventory()
@@ -83,29 +85,41 @@ export default {
         .get('http://localhost/sistemaDeInventario/public/api/showLogs')
         .then((res) => {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          this.logs = res.data
-          this.count = this.logs[0]
-        })
-        .catch(e => {
-          console.log(e)
-        })
+           this.logs = res.data
+           this.logNoCharacteristics = this.logs[0]            
+           this.logNoCharacteristics.forEach(element => {
+            this.count = this.count+1
+            this.id = element['inventory_id']
+            console.log(this.count)
+            // let params = JSON.stringify({
+            //   id: this.logs[0][this.count]['inventory_id'],
+            // })
+            this.$axios
+            .get('http://localhost/sistemaDeInventario/public/api/consultInventory', {
+              params: { 
+                id: element['inventory_id']
+              },
+              headers: {
+               'Content-Type': 'application/json',
+               'Accept': 'application/json'
+              },
+              })
+              .then(res => {
+                this.inventory = res.data[0]['name']
+                })
+              .catch(e => {
+                console.log(e)
+              })
+           });
+            
+          })
+            .catch(e => {
+              console.log(e)
+          })
     },
-    consultInventory (row) {
-      for ( i = 1; i < this.count; i++) {
-        this.id = logs[0][i]['inventory_id'] 
-        this.$axios
-          .get('http://localhost/sistemaDeInventario/public/api/consultInventory',{
-            params: {
-              id: this.id
-              }
-          })
-          .then(res => {
-            this.inventory = res.data[0]['name']
-          })
-          .catch(e => {
-            console.log(e)
-          })
-      }
+       consultInventory (row) {
+    //   this.logNoCharacteristics = this.logs[0]
+      
     },
     // comoQuiera (){
     //Este metodo se puede llamar en algun campo de la tabla, como se muestra en columns 
@@ -117,5 +131,5 @@ export default {
       json={"id":this.count}
     }
   }
-}
+ }
 </script>
