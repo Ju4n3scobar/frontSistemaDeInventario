@@ -8,15 +8,13 @@
           </td>
         </tr>
       </table> -->
-      <pre>{{ inventory }}</pre>
+      <!-- <pre>{{ inventory }}</pre> -->
       <div class="q-pa-md">
         <q-table
           title="Lista de inventario"
           :rows="logs[0]"
           @row-click= gotosite()
           :columns="columns"
-          row-key="name"
-          color="amber" 
         />
       </div>
     </div>
@@ -39,7 +37,7 @@ export default {
         logNoCharacteristics:[],
         inventory: [],
         inventory1: [],
-        count: 0,
+        count: 1,
         id: [],
         params: [],
         json: {},
@@ -54,16 +52,15 @@ export default {
           { name: 'type', align: 'center', label: 'Tipo', field: 'type', sortable: true },
           { name: 'user', align: 'center', label: 'Usuario responsable', field: 'user', sortable: true },
           { name: 'employee', align: 'center', label: 'Empleado asignado', field: 'employee', sortable: true},
-          { name: 'reason', align: 'center', label: 'Razon', field: 'reason', sortable: true},
-          { name: 'inventory_id', align: 'center', label: 'Equipo', field: row => this.inventory , sortable: true },
-          { name: 'Acciones', align: 'center', label: 'Acciones', field: row => QBtn , sortable: true }
+          { name: 'reason', align: 'center', label: 'Razon', field: 'reason', sortable: true },
+          // { name: 'inventory_id', align: 'center', label: 'Equipo', field: row => this.inventory.next , sortable: true },
+          // { name: 'Acciones', align: 'center', label: 'Acciones', field: row => QBtn , sortable: true }
         ]
       }
     },
-  beforeMount() {
+  created() {
     // this.listOfUnassigment()
     this.listOfUnassigment()
-    this.consultInventory()
   },
   methods: {
     gotosite(){
@@ -107,8 +104,7 @@ export default {
               },
               })
               .then(res => {
-                this.inventory = res.data[0]['name']
-                console.log(res.data[0]['name'])
+                this.inventory.push(res.data[0]['name'])
                 })
               .catch(e => {
                 console.log(e)
