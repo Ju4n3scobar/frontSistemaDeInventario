@@ -13,9 +13,41 @@
         <q-table
           title="Lista de inventario"
           :rows="logs[0]"
-          @row-click= gotosite()
           :columns="columns"
-        />
+        >
+        <template v-slot:body="props">
+          <q-tr :props="props" class = "cursor-pointer" @click="onRowClick($event, props.row)">
+          <q-td key="id" :props="props">
+            {{ props.row.id }}
+          </q-td>
+          <q-td key="type" :props="props">
+            <q-badge color="white" style="color: black;">
+              {{ props.row.type }}
+            </q-badge>
+          </q-td>
+          <q-td key="user" :props="props">
+            <q-badge color="white" style="color: black;">
+              {{ props.row.user }}
+            </q-badge>
+          </q-td>
+          <q-td key="employee" :props="props">
+            <q-badge color="white" style="color: black;">
+              {{ props.row.employee }}
+            </q-badge>
+          </q-td>
+          <q-td key="reason" :props="props">
+            <q-badge color="white" style="color: black;">
+              {{ props.row.reason }}
+            </q-badge>
+          </q-td>
+          <q-td key="equipo" :props="props">
+            <q-badge color="white" style="color: black;">
+              {{ inventory[props.row.id] }}
+            </q-badge>
+          </q-td>
+        </q-tr>
+        </template>
+        </q-table>
       </div>
     </div>
   </q-page>
@@ -53,9 +85,10 @@ export default {
           { name: 'user', align: 'center', label: 'Usuario responsable', field: 'user', sortable: true },
           { name: 'employee', align: 'center', label: 'Empleado asignado', field: 'employee', sortable: true},
           { name: 'reason', align: 'center', label: 'Razon', field: 'reason', sortable: true },
+          { name: 'equipo', align: 'center', label: 'Equipo', field: 'equipo', sortable: true },
           // { name: 'inventory_id', align: 'center', label: 'Equipo', field: row => this.inventory.next , sortable: true },
           // { name: 'Acciones', align: 'center', label: 'Acciones', field: row => QBtn , sortable: true }
-        ]
+        ],
       }
     },
   created() {
@@ -63,7 +96,10 @@ export default {
     this.listOfUnassigment()
   },
   methods: {
-    gotosite(){
+    // gotosite(){
+    //   window.location.href = 'http://localhost:8080/?#/logsDetails?'
+    // }
+    onRowClick(evt, row) {
       window.location.href = 'http://localhost:8080/?#/logsDetails?'
     },
     // async listOfUnassigment(): Promise<void> {
@@ -86,30 +122,22 @@ export default {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
            this.logs = res.data
            this.logNoCharacteristics = this.logs[0]            
-           this.logNoCharacteristics.forEach(element => {
-            this.count = this.count+1
-            this.id = element['inventory_id']
-            console.log(this.id)
+          //  this.logNoCharacteristics.forEach(element => {
+            // this.count = this.count+1
+            // console.log(this.count)
+            // this.id = element['inventory_id']
             // let params = JSON.stringify({
             //   id: this.logs[0][this.count]['inventory_id'],
             // })
             this.$axios
-            .get('http://localhost/sistemaDeInventario/public/api/consultInventory', {
-              params: { 
-                id: element['inventory_id']
-              },
-              headers: {
-               'Content-Type': 'application/json',
-               'Accept': 'application/json'
-              },
-              })
-              .then(res => {
-                this.inventory.push(res.data[0]['name'])
+            .get('http://localhost/sistemaDeInventario/public/api/showInventory')
+            .then((res) => {
+              console.log(res.data)
+              this.inventory = res.data
                 })
               .catch(e => {
                 console.log(e)
-              })
-           });
+              });
             
           })
             .catch(e => {
