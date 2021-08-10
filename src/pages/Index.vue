@@ -11,9 +11,10 @@
       <!-- <pre>{{ inventory }}</pre> -->
       <div class="q-pa-md">
         <q-table
-          title="Lista de inventario"
+          title="Lista de equipos sin asignar"
           :rows="logs[0]"
           :columns="columns"
+          no-data-label="No se encontraron datos"
         >
         <template v-slot:body="props">
           <q-tr :props="props" class = "cursor-pointer" @click="onRowClick($event, props.row)">
@@ -35,14 +36,14 @@
               {{ props.row.employee }}
             </q-badge>
           </q-td>
-          <q-td key="reason" :props="props">
-            <q-badge color="white" style="color: black;">
-              {{ props.row.reason }}
-            </q-badge>
-          </q-td>
           <q-td key="equipo" :props="props">
             <q-badge color="white" style="color: black;">
-              {{ inventory[props.row.id] }}
+              {{ inventory[props.row.inventory_id] }}
+            </q-badge>
+          </q-td>
+          <q-td key="inventory_id" :props="props">
+            <q-badge color="white" style="color: black;">
+              {{ props.row.inventory_id }}
             </q-badge>
           </q-td>
         </q-tr>
@@ -84,8 +85,8 @@ export default {
           { name: 'type', align: 'center', label: 'Tipo', field: 'type', sortable: true },
           { name: 'user', align: 'center', label: 'Usuario responsable', field: 'user', sortable: true },
           { name: 'employee', align: 'center', label: 'Empleado asignado', field: 'employee', sortable: true},
-          { name: 'reason', align: 'center', label: 'Razon', field: 'reason', sortable: true },
           { name: 'equipo', align: 'center', label: 'Equipo', field: 'equipo', sortable: true },
+          { name: 'inventory_id', align: 'center', label: 'CodEquipo', field: 'inventory_id', sortable: true },
           // { name: 'inventory_id', align: 'center', label: 'Equipo', field: row => this.inventory.next , sortable: true },
           // { name: 'Acciones', align: 'center', label: 'Acciones', field: row => QBtn , sortable: true }
         ],
@@ -99,8 +100,8 @@ export default {
     // gotosite(){
     //   window.location.href = 'http://localhost:8080/?#/logsDetails?'
     // }
-    onRowClick(evt, row) {
-      window.location.href = 'http://localhost:8080/?#/logsDetails?'
+    onRowClick(evt, props) {
+      window.location.href = "http://localhost:8080/#/logsDetails/id="+props.inventory_id
     },
     // async listOfUnassigment(): Promise<void> {
     //   console.log('hola que haces');
@@ -132,22 +133,19 @@ export default {
             this.$axios
             .get('http://localhost/sistemaDeInventario/public/api/showInventory')
             .then((res) => {
-              console.log(res.data)
               this.inventory = res.data
-                })
+            })
               .catch(e => {
                 console.log(e)
-              });
+            });
             
           })
             .catch(e => {
               console.log(e)
           })
     },
-       consultInventory (row) {
+       consultInventory () {
     //   this.logNoCharacteristics = this.logs[0]
-    
-      
     },
     // comoQuiera (){
     //Este metodo se puede llamar en algun campo de la tabla, como se muestra en columns 
@@ -159,6 +157,5 @@ export default {
       json={"id":this.count}
     }
   }
-  
  }
 </script>

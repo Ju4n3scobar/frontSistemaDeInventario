@@ -24,7 +24,7 @@
       style="background-color: #0d153c"
     >
       <q-list>
-        <img src="img/logoComodisimosMenu.png" style="width: 45px; margin: 10px; margin-left: 25px;">
+        <img src="img/logoComodisimosMenu.png" style="width: 45px; margin: 10px; margin-left: 25px; border-radius: 3px;">
         <q-item-label
           header
           class="text-white absolute-center"
@@ -48,6 +48,7 @@
 </template>
 <script lang="ts">
 import EssentialLink from 'components/EssentialLink.vue'
+import { Script } from 'vm'
 
 const linksList = [
 
@@ -68,7 +69,9 @@ const linksList = [
     title: 'Manual de usuario',
     caption: 'Manual con las instrucciones del software',
     icon: "fas fa-book-reader",
-    style: "margin: 10px; border-radius: 20px; font-family: 'Heebo', sans-serif'; font-weight: 100;"
+    onmouseover: "this.style.background= '#1a83ff';",
+    onmouseout: "this.style.background= '#0000';",
+    style: "margin: 10px; border-radius: 20px; font-family: 'Heebo', sans-serif'; font-weight: 100;",
   }
 ]
 
