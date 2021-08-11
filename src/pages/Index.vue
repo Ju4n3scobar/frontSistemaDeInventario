@@ -133,7 +133,8 @@ export default {
             this.$axios
             .get('http://localhost/sistemaDeInventario/public/api/showInventory')
             .then((res) => {
-              this.inventory = res.data
+            
+                this.inventory = res.data
             })
               .catch(e => {
                 console.log(e)

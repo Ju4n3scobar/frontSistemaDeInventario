@@ -47,7 +47,7 @@ export default {
         const q = useQuasar()
         const pressSave = () => {
             
-            console.log('Diste click al formulario')
+            console.log('Diste click al formulario');
             q.notify({
                 type: 'positive',
                 message: 'Equipo registrado correctamente'
@@ -76,7 +76,7 @@ export default {
             pressReset
         }
     },
-    data () {
+    data() {
     return {
       id: this.$route.params.id[3]-1,
       nombreEqui: [],
@@ -85,7 +85,7 @@ export default {
       user: [],
       characteristics: '',
       type: [],
-      employee: [],
+      employee: []
     }
   },
   created () {
@@ -122,29 +122,28 @@ export default {
     },
     saveLogUpdateCharacteristics () {
           this.$axios
-            .post('http://localhost/sistemaDeInventario/public/api/changeCharacteristics', {
-              params: { 
-                id: 1,
-                type: "Actualizar",
-                user: "Juan",
-                characteristics: "RAM=>10=>Procesador=>IntelCeleron",
-                employee: "Gilberto",
-                reason: "Sin pc",
-                inventory_id: 1,
-
+            .post('http://localhost/sistemaDeInventario/public/api/storeInventory', {
+              body: { 
+                  user: "Juaneste",
+                  name: "JuanA",
+                  classification: "Actualizar",
+                  reference: "Juan Andres Escobar",
+                  status: 1,
+                  price: 1
               },
               headers: {
                'Content-Type': 'application/json',
                'Accept': 'application/json'
-              },
-              })
+              }
               .then(res => {
                   console.log(res.data)
-                })
+              })
               .catch(e => {
                 console.log(e)
               })
-    },
-  }
+            })
+    }
+
+}
 }
 </script>
